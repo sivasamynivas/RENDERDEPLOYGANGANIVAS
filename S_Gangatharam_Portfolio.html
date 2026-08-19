@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S. Gangatharam — Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-2:#0F2649;
+    --navy-3:#132C55;
+    --grid-line:rgba(143,214,232,0.10);
+    --grid-line-strong:rgba(143,214,232,0.22);
+    --cyan:#8FD6E8;
+    --cyan-dim:#5C93A6;
+    --copper:#C87F4A;
+    --copper-bright:#E0A06B;
+    --paper:#F3EFE6;
+    --paper-2:#EAE4D6;
+    --ink:#12181F;
+    --ink-soft:#3B4552;
+    --muted:#9FB4C7;
+    --sheet-radius:2px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--navy);
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  ::selection{background:var(--copper);color:var(--navy);}
+
+  .blueprint-bg{
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
+    background-size:16px 16px, 16px 16px, 80px 80px, 80px 80px;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    color:#EDF3F7;
+    letter-spacing:-0.01em;
+  }
+
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  a{color:var(--copper-bright);}
+
+  /* ---------- layout shells ---------- */
+  section{
+    position:relative;
+    padding:120px 8vw;
+  }
+  @media(max-width:720px){
+    section{padding:80px 6vw;}
+  }
+
+  .corner-mark{
+    position:absolute;
+    width:22px;height:22px;
+    border:1.5px solid var(--cyan-dim);
+    opacity:0.55;
+  }
+  .corner-mark.tl{top:24px;left:24px;border-right:none;border-bottom:none;}
+  .corner-mark.tr{top:24px;right:24px;border-left:none;border-bottom:none;}
+  .corner-mark.bl{bottom:24px;left:24px;border-right:none;border-top:none;}
+  .corner-mark.br{bottom:24px;right:24px;border-left:none;border-top:none;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--cyan);
+    display:inline-block;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    *{animation:none !important;}
+  }
+
+  /* ================= NAV ================= */
+  nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:50;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8vw;
+    background:rgba(11,30,61,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--grid-line-strong);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+  }
+  nav .mark{color:#EDF3F7;font-weight:600;}
+  nav .idx{display:flex;gap:22px;color:var(--muted);}
+  nav .idx a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+  nav .idx a:hover{color:var(--copper-bright);}
+  nav .idx span{color:var(--cyan-dim);}
+  @media(max-width:720px){ nav .idx{display:none;} }
+
+  /* ================= HERO ================= */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:90px;
+    position:relative;
+  }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:60px;
+    align-items:end;
+  }
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 5.2rem);
+    line-height:1.02;
+    font-weight:700;
+  }
+  .hero .role{
+    margin-top:20px;
+    font-size:clamp(1rem,2vw,1.25rem);
+    color:var(--cyan);
+    font-family:'JetBrains Mono',monospace;
+    max-width:640px;
+  }
+  .hero .lede{
+    margin-top:22px;
+    max-width:560px;
+    font-size:1.02rem;
+    color:var(--muted);
+  }
+
+  .titleblock{
+    border:1px solid var(--grid-line-strong);
+    background:var(--navy-2);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    width:260px;
+    color:var(--muted);
+  }
+  .titleblock .row{
+    display:flex;
+    border-top:1px solid var(--grid-line-strong);
+  }
+  .titleblock .row:first-child{border-top:none;}
+  .titleblock .cell{
+    padding:9px 12px;
+    flex:1;
+  }
+  .titleblock .cell + .cell{border-left:1px solid var(--grid-line-strong);}
+  .titleblock .label{color:var(--cyan-dim);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:3px;}
+  .titleblock .val{color:#EDF3F7;}
+
+  .hero-diagram{
+    margin-top:64px;
+    display:flex;
+    align-items:center;
+    gap:0;
+  }
+  .hero-diagram svg{width:100%;height:auto;max-width:720px;}
+  .draw-line{
+    stroke-dasharray:1400;
+    stroke-dashoffset:1400;
+    animation:draw 2.4s ease forwards 0.3s;
+  }
+  .draw-line.delay{animation-delay:0.9s;}
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  .node-pulse{
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.45;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .draw-line{stroke-dashoffset:0;animation:none;}
+    .node-pulse{animation:none;}
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:30px;left:8vw;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.14em;
+    color:var(--cyan-dim);
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .scroll-cue .bar{width:1px;height:26px;background:linear-gradient(var(--cyan-dim),transparent);}
+
+  /* ================= OBJECTIVE (annotation note) ================= */
+  .note-wrap{display:flex;justify-content:center;}
+  .note{
+    background:var(--paper);
+    color:var(--ink);
+    max-width:760px;
+    padding:44px 48px;
+    position:relative;
+    box-shadow:0 24px 50px -20px rgba(0,0,0,0.55);
+    transform:rotate(-0.6deg);
+    border-radius:var(--sheet-radius);
+  }
+  .note::before{
+    content:"";
+    position:absolute;
+    top:-14px;left:36px;
+    width:70px;height:26px;
+    background:rgba(200,127,74,0.35);
+    border:1px solid rgba(200,127,74,0.55);
+    transform:rotate(-3deg);
+  }
+  .note .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:14px;
+    display:block;
+  }
+  .note p{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+
+  /* ================= SKILLS (materials legend) ================= */
+  .legend-title{max-width:600px;margin-bottom:52px;}
+  .legend-title h2{font-size:clamp(1.8rem,3.4vw,2.6rem);}
+  .legend-title p{margin-top:14px;color:var(--muted);max-width:520px;}
+
+  .legend{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:1px;
+    background:var(--grid-line-strong);
+    border:1px solid var(--grid-line-strong);
+  }
+  .legend-item{
+    background:var(--navy);
+    padding:20px 22px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    transition:background 0.25s ease;
+  }
+  .legend-item:hover{background:var(--navy-3);}
+  .swatch{
+    width:26px;height:26px;
+    flex-shrink:0;
+    border:1px solid var(--grid-line-strong);
+    background:
+      repeating-linear-gradient(135deg, var(--copper) 0 2px, transparent 2px 7px);
+    opacity:0.85;
+  }
+  .legend-item span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:#DCE6ED;
+    letter-spacing:0.01em;
+  }
+
+  /* ================= PROJECTS (drawing sheets) ================= */
+  .sheets-head{max-width:640px;margin-bottom:56px;}
+  .sheets-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);}
+  .sheets-head p{margin-top:14px;color:var(--muted);max-width:540px;}
+
+  .sheet{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:var(--sheet-radius);
+    margin-bottom:34px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .sheet-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 26px;
+    background:var(--paper-2);
+    border-bottom:1px solid rgba(18,24,31,0.12);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .sheet-bar .no{color:var(--copper);font-weight:600;}
+  .sheet-body{padding:30px 26px 34px;}
+  .sheet-body h3{font-size:1.4rem;color:var(--ink);margin-bottom:16px;}
+  .sheet-body ul{list-style:none;}
+  .sheet-body li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:10px;
+    color:var(--ink-soft);
+    font-size:0.97rem;
+  }
+  .sheet-body li::before{
+    content:"—";
+    position:absolute;left:0;top:0;
+    color:var(--copper);
+  }
+  .stack{
+    display:flex;flex-wrap:wrap;gap:8px;
+    margin-top:20px;
+  }
+  .stack span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border:1px solid rgba(18,24,31,0.2);
+    color:var(--ink-soft);
+    border-radius:2px;
+  }
+
+  /* ================= SPECS (certs / education) ================= */
+  .specs-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:64px;
+  }
+  @media(max-width:840px){ .specs-grid{grid-template-columns:1fr;gap:56px;} }
+
+  .spec-block h3{
+    font-size:1.15rem;
+    margin-bottom:22px;
+    color:#EDF3F7;
+  }
+
+  .spec-table{width:100%;border-collapse:collapse;}
+  .spec-table tr{border-top:1px solid var(--grid-line-strong);}
+  .spec-table tr:first-child{border-top:none;}
+  .spec-table td{
+    padding:14px 4px;
+    font-size:0.92rem;
+    color:var(--muted);
+    vertical-align:top;
+  }
+  .spec-table td.k{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--cyan-dim);
+    width:38%;
+    padding-top:16px;
+  }
+  .spec-table td.v{color:#DCE6ED;}
+
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    margin-top:6px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px;top:4px;bottom:4px;
+    width:1px;
+    background:repeating-linear-gradient(var(--cyan-dim) 0 4px, transparent 4px 8px);
+  }
+  .timeline .pt{position:relative;padding-bottom:26px;}
+  .timeline .pt::before{
+    content:"";
+    position:absolute;
+    left:-26px;top:3px;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--copper);
+    box-shadow:0 0 0 3px rgba(200,127,74,0.2);
+  }
+  .timeline .yr{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:0.06em;}
+  .timeline .ti{margin-top:5px;color:#DCE6ED;font-size:0.96rem;}
+  .timeline .su{margin-top:3px;color:var(--muted);font-size:0.86rem;}
+
+  .lang-row{display:flex;gap:28px;margin-top:26px;}
+  .lang-row .lc{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .lang-row .dot{width:6px;height:6px;background:var(--copper);border-radius:50%;}
+
+  /* ================= FOOTER TITLEBLOCK ================= */
+  footer{
+    padding:100px 8vw 60px;
+    border-top:1px solid var(--grid-line-strong);
+  }
+  .foot-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:40px;
+  }
+  @media(max-width:840px){
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  .foot-grid h2{font-size:clamp(1.9rem,3.6vw,2.8rem);}
+  .foot-col .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--cyan-dim);
+    margin-bottom:12px;
+  }
+  .foot-col .val{color:#DCE6ED;font-size:0.94rem;margin-bottom:8px;}
+  .foot-bottom{
+    margin-top:80px;
+    padding-top:24px;
+    border-top:1px solid var(--grid-line-strong);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--cyan-dim);
+    letter-spacing:0.06em;
+  }
+
+  a:focus-visible, .legend-item:focus-visible{
+    outline:2px solid var(--copper-bright);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body class="blueprint-bg">
+
+<nav>
+  <span class="mark">S. GANGATHARAM</span>
+  <div class="idx">
+    <a href="#objective"><span>01</span> Brief</a>
+    <a href="#skills"><span>02</span> Materials</a>
+    <a href="#projects"><span>03</span> Drawings</a>
+    <a href="#specs"><span>04</span> Specs</a>
+    <a href="#contact"><span>05</span> Title Block</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Drawing No. DS&ndash;001 &nbsp;/&nbsp; Rev. A</div>
+      <h1>S. Gangatharam</h1>
+      <div class="role">Data Scientist — trained as a Civil Engineer, now modeling data instead of load-bearing walls.</div>
+      <p class="lede">Seven years spent reading structural drawings taught me how systems carry weight. Now I read data the same way — finding where the load is, and where the model needs reinforcing. Based in Tirupur.</p>
+
+      <div class="hero-diagram" aria-hidden="true">
+        <svg viewBox="0 0 720 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="60" width="46" height="46" stroke="#8FD6E8" stroke-width="1.4" opacity="0.7"/>
+          <line x1="18" y1="106" x2="64" y2="60" stroke="#8FD6E8" stroke-width="1" opacity="0.4"/>
+          <path class="draw-line" d="M64 83 H 300" stroke="#5C93A6" stroke-width="1.4"/>
+          <circle class="node-pulse" cx="330" cy="83" r="7" fill="#C87F4A"/>
+          <path class="draw-line delay" d="M340 83 H 640" stroke="#5C93A6" stroke-width="1.4"/>
+          <g stroke="#C87F4A" stroke-width="1.4" opacity="0.9">
+            <path d="M640 45 L 700 45 L 700 121 L 640 121 Z"/>
+            <path d="M652 100 L 665 80 L 678 92 L 692 60"/>
+          </g>
+          <text x="18" y="128" fill="#5C93A6" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">SITE: STRUCTURAL DESIGN</text>
+          <text x="612" y="140" fill="#C87F4A" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">SITE: DATA MODELS</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="titleblock">
+      <div class="row">
+        <div class="cell"><span class="label">Project</span><span class="val">Portfolio</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><span class="label">Location</span><span class="val">Tirupur, IN</span></div>
+        <div class="cell"><span class="label">Scale</span><span class="val">1 : Entry-level</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><span class="label">Foundation</span><span class="val">B.E. Civil, 2019</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><span class="label">Contact</span><span class="val">7904161307</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><div class="bar"></div>Scroll to Sheet 01</div>
+</section>
+
+<!-- ================= OBJECTIVE ================= -->
+<section id="objective">
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="note-wrap reveal">
+    <div class="note">
+      <span class="tag">General Note — Objective</span>
+      <p>As an emerging data scientist, I'm looking for a role that pushes me to keep learning and to put new skills to work in practical ways — building models and tools that create real value, for the teams I work with and for my own growth alongside them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="reveal">
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="legend-title">
+    <div class="eyebrow">Sheet 02 — Legend</div>
+    <h2>Materials &amp; Tools</h2>
+    <p>The stack this work is built from — languages, libraries, and the analytical fundamentals underneath them.</p>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="swatch"></div><span>Python</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Machine Learning</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Pandas / NumPy</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Matplotlib / Plotly</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Scikit-learn</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Power BI</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>PostgreSQL</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Excel</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Statistics &amp; Probability</span></div>
+    <div class="legend-item"><div class="swatch"></div><span>Problem Solving</span></div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="reveal">
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="sheets-head">
+    <div class="eyebrow">Sheet 03 — Drawings</div>
+    <h2>Projects</h2>
+    <p>Four working drawings, each solving a different structural problem — just with data instead of steel and concrete.</p>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-bar"><span><span class="no">DS-101</span> &nbsp;Industrial Copper Modeling</span><span>Regression &amp; Classification</span></div>
+    <div class="sheet-body">
+      <h3>Industrial Copper Modeling</h3>
+      <ul>
+        <li>Ran a full data-driven initiative for a manufacturing client, from raw data to a working tool — using Python, EDA, and Streamlit throughout.</li>
+        <li>Built regression and classification models to predict copper sales prices and lead statuses with strong accuracy.</li>
+        <li>Applied feature engineering, outlier treatment, and model tuning, then wrapped it all in an interactive Streamlit app for real-time predictions.</li>
+      </ul>
+      <div class="stack"><span>Python</span><span>EDA</span><span>Streamlit</span><span>Regression</span><span>Classification</span></div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-bar"><span><span class="no">DS-102</span> &nbsp;Drug Eligibility Prediction</span><span>Healthcare</span></div>
+    <div class="sheet-body">
+      <h3>Drug Eligibility Prediction</h3>
+      <ul>
+        <li>Analyzed electronic health records to predict whether a patient will be eligible for a target drug within the next 30 days.</li>
+        <li>Used feature engineering and time-based analysis, with deep learning techniques explored to sharpen predictions.</li>
+        <li>Also studied patient drop-off rates and prescription patterns to round out the picture around the target drug.</li>
+      </ul>
+      <div class="stack"><span>Feature Engineering</span><span>Time-Series</span><span>Deep Learning</span></div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-bar"><span><span class="no">DS-103</span> &nbsp;E-commerce Customer Segmentation</span><span>Unsupervised Learning</span></div>
+    <div class="sheet-body">
+      <h3>E-commerce Customer Segmentation</h3>
+      <ul>
+        <li>Segmented e-commerce customers using K-means clustering to group shoppers by shared interests and behavior.</li>
+        <li>Determined the optimal number of clusters with silhouette scoring, after careful data preprocessing.</li>
+        <li>Turned cluster analysis into insights on purchasing behavior that could inform real business decisions.</li>
+      </ul>
+      <div class="stack"><span>K-Means</span><span>Silhouette Score</span><span>Preprocessing</span></div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-bar"><span><span class="no">DS-104</span> &nbsp;Breast Cancer Prediction</span><span>Medical Diagnosis</span></div>
+    <div class="sheet-body">
+      <h3>Breast Cancer Prediction</h3>
+      <ul>
+        <li>Built an SVM-based model for medical diagnosis support, working directly with clinical data.</li>
+        <li>Tuned hyperparameters to push diagnostic accuracy higher, treating precision as the whole point of the exercise.</li>
+      </ul>
+      <div class="stack"><span>SVM</span><span>Hyperparameter Tuning</span><span>Medical Data</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPECS ================= -->
+<section id="specs" class="reveal">
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="sheets-head">
+    <div class="eyebrow">Sheet 04 — Specifications</div>
+    <h2>Certifications &amp; Foundation</h2>
+  </div>
+
+  <div class="specs-grid">
+    <div class="spec-block">
+      <h3>Certifications</h3>
+      <table class="spec-table">
+        <tr><td class="k">Program</td><td class="v">IITM Master Data Science Program — GUVI</td></tr>
+        <tr><td class="k">Program</td><td class="v">IITM-GUVI Python Course</td></tr>
+      </table>
+
+      <h3 style="margin-top:40px;">Languages</h3>
+      <div class="lang-row">
+        <div class="lc"><span class="dot"></span>English</div>
+        <div class="lc"><span class="dot"></span>Tamil</div>
+      </div>
+    </div>
+
+    <div class="spec-block">
+      <h3>Foundation — Education</h3>
+      <div class="timeline">
+        <div class="pt">
+          <div class="yr">2015 — 2019</div>
+          <div class="ti">B.E. Civil Engineering</div>
+          <div class="su">CGPA 7.602</div>
+        </div>
+        <div class="pt">
+          <div class="yr">Ongoing</div>
+          <div class="ti">Applying an engineer's structural thinking to data science</div>
+          <div class="su">Manufacturing, healthcare &amp; retail case work</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER / TITLE BLOCK ================= -->
+<footer id="contact">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <h2>Let's build<br>something.</h2>
+    </div>
+    <div class="foot-col">
+      <div class="label">Phone</div>
+      <div class="val">7904161307</div>
+      <div class="label" style="margin-top:18px;">Email</div>
+      <div class="val">sivasamynivas@gmail.com</div>
+    </div>
+    <div class="foot-col">
+      <div class="label">Location</div>
+      <div class="val">Tirupur, Tamil Nadu</div>
+      <div class="label" style="margin-top:18px;">Profiles</div>
+      <div class="val">GitHub</div>
+      <div class="val">LinkedIn</div>
+    </div>
+    <div class="foot-col">
+      <div class="label">Status</div>
+      <div class="val">Open to Data Science roles</div>
+      <div class="label" style="margin-top:18px;">Drawing No.</div>
+      <div class="val mono">DS&ndash;001 / Rev. A</div>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <span>S. GANGATHARAM — DATA SCIENCE PORTFOLIO</span>
+    <span>SHEET 05 OF 05</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
